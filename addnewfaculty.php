@@ -180,23 +180,7 @@
                                 <span class="error_form" id="facdob_error_message" style="color:red; font-size :13px; "></span>
                             </td>
 
-                            <td>
-                                <p>Class :</p>
-                                <select type="text" name="class" id="class" required>
-                                    <?php
-                                        $q2 = "select * from catclass";
-                                        $r2 = mysqli_query($con, $q2);
-
-                                        if (mysqli_num_rows($r2) > 0) {
-                                            // output data of each row
-                                            while($row = mysqli_fetch_assoc($r2)) 
-                                            {
-                                              echo "<option>".$row["class"]."</option>";
-                                            }
-                                          }                                        
-                                    ?>
-                                </select>
-                            </td>
+                            
 
                             <td>
                                 <p>Designation :</p>
@@ -205,14 +189,15 @@
                                     <option value="Asst. Faculty">Asst. Faculty</option>
                                 </select>
                             </td>
-                        </tr>
-                        <tr>                       
+
                             <td>
                                 <p>Qualifiction :</p>
                                 <input type="text" placeholder="Qualification" id="facqual" name="facqual"><br>
                                 <span class="error_form" id="facqual_error_message" style="color:red; font-size :13px; "></span>
                             </td>
-
+                        </tr>
+                        <tr>                       
+                            
                             <td>
                                 <p>Current Job :</p>
                                 <input type="text" placeholder="Current Job" id="facjob" name="facjob"><br>
@@ -224,25 +209,13 @@
                                 <input type="text" placeholder="Father's Name" id="facfather" name="facfather"><br>
                                 <span class="error_form" id="facfather_error_message" style="color:red; font-size :13px; "></span>
                             </td>
-                        </tr>
-                        <tr>
+                        
                             <td>
                                 <p>Name of Mother :</p>
                                 <input type="text" placeholder="Mother's Name" id="facmother" name="facmother"><br>
                                 <span class="error_form" id="facmother_error_message" style="color:red; font-size :13px; "></span>
                             </td>
 
-                            <td>
-                                <p>Enter a password :</p>
-                                <input type="password" placeholder="Enter Password" id="facpassword" name="facpassword"><br>
-                                <span class="error_form" id="facpassword_error_message" style="color:red; font-size :13px; "></span>
-                            </td>
-
-                            <td>
-                                <p>Enter the password again :</p>
-                                <input type="password" placeholder="Re-enter Password" id="facrepassword" name="facrepassword"><br>
-                                <span class="error_form" id="facrepassword_error_message" style="color:red; font-size :13px; "></span>
-                            </td>
                         </tr>
                     </table>
                     
