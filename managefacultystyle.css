@@ -1,0 +1,520 @@
+@import url('https://fonts.googleapis.com/css2?family=Robo:wght@400;500;700&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    position: relative;
+    width: 100%;
+}
+
+/*Header section*/
+
+.header {
+    height: 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: #5073fb;
+    border-bottom: 4px solid #01135c;
+}
+
+.logo {
+    padding-left: 10px;
+}
+
+.logo img
+{
+    margin-top: 0.5px;
+    margin-left: 25px;
+    width: 250px;
+    height: 50px;
+}
+
+.logo span {
+    color: #5073fb;
+}
+
+.search--notification--profile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: calc(100% - 300px);
+    padding-left: 5px;
+}
+
+.notification--profile {
+    display: flex;
+    margin-left: 1120px;
+}
+
+.picon {
+    display: flex;
+    margin-left: -10px;
+    font-size: 1.1rem;
+    padding: 1px;
+    align-items: center;
+}
+
+.lock {
+    color: #5073fb;
+    background-color: rgba(80, 115, 251, .2);
+}
+
+.bell {
+    color: #f1d243;
+    margin-left: -38px;
+    margin-right: 25px;
+}
+
+.header .search--notification--profile .notification--profile .bell:hover{
+    background-color: rgba(0, 0, 0, 0.184);
+    border-radius: 3px;
+    padding: 5px;
+}
+
+.chat 
+{
+    text-decoration: none;
+    color: #ffffff;
+    margin-left: 5px;
+}
+
+.header .search--notification--profile .notification--profile a:hover 
+{
+    background-color: rgba(0, 0, 0, 0.184);
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.picon a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.profile {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-left: 3px;
+    background-color: #000;
+}
+
+.picon .chat .picon .profile{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.main {
+    position: relative;
+    width: 100%;
+    min-height: calc(100vh - 60px);
+    background-color: #ffffff;
+}
+
+.sub_menu_of_profile
+{
+    display: none;
+}
+
+/*Sidebar CSS starts here*/
+
+.sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 260px;
+    background-color: #ffffff;
+    padding: 5.5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 4px solid #01135c;
+    border-left: 4px solid #01135c;
+    border-bottom: 4px solid #01135c;
+    transition: .3s;
+}
+
+.sidebar.active {
+    width: 103px;
+    overflow: hidden;
+}
+
+.sidebar.active .sidebar--item {
+    display: none;
+}
+
+li {
+    list-style: none;
+}
+
+a 
+{
+    text-decoration: none;
+}
+
+.sidebar--items a,
+.sidebar--bottom-items a {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    color: #000;
+    padding: 10px;
+    border-radius: 0px;
+}
+
+.sidebar--items a:hover,
+.sidebar--bottom-items a:hover {
+    background-color: #5073fb;
+    color: #fff;
+}
+
+#active--link {
+    background-color: #5073fb;
+    color: #fff;
+}
+
+.sidebar--bottom-items li:last-child a {
+    margin-bottom: 0;
+}
+
+/* Sidebar CSS ends here */
+
+/* Topbar CSS starts here */
+
+.topbar 
+{
+    position: absolute;
+    top: 0px;
+    left: 256px;
+    height: 59px;
+    width: 1262px;
+    background-color: #ffffff;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-left: 4px solid #01135c;
+    border-bottom: 4px solid #01135c;
+    transition: .3s;
+}
+
+.topbar .active 
+{
+    width: 103px;
+    height: 60px;
+    overflow: hidden;
+}
+
+.topbar .topbar--item
+{
+    margin-top: 20px;
+}
+
+.topbar .active .topbar--item 
+{
+    margin-top: 10px;
+    height: 100px;
+    width: 200px;
+    display: none;
+}
+
+.topbar a
+{
+    padding: 12px 12px 12px 12px;
+    margin-bottom: 0px;
+    margin-right: 20px;
+    height: 54px;
+    width: 300px;
+    font-size: large;
+    align-items: center;
+}
+
+.topbar--items
+{
+    padding-top: 30px;
+}
+
+/* .topbar .active .topbar--items a{
+    display: flex;
+    height: 57px;
+    align-items: center;
+    margin-bottom: 0px;
+    font-size: 2.1rem;
+    color: #000;
+    padding: 10px;
+    border-radius: 0px;
+}*/
+
+.topbar a:hover
+{
+    background-color: #5073fb;
+    color: #fff;
+}
+
+/* Topbar CSS ends here */
+
+
+.icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    font-size: 1.3rem;
+}
+
+.icon-0 {
+    color: #5073fb;
+}
+
+.icon-1 {
+    color: #c5bc58;
+}
+
+.icon-2 {
+    color: #a280e9;
+}
+
+.icon-3 {
+    color: #85ade3;
+}
+
+.icon-4 {
+    color: #e36ac8;
+}
+
+.icon-5 {
+    color: #70d7a5;
+}
+
+.icon-6 {
+    color: #5f5ce0;
+}
+
+.icon-7 {
+    color: #e86786;
+}
+
+.icon-8 {
+    color: #f1d243;
+}
+
+/* main--content */
+
+.main--content {
+    position: absolute;
+    top: 65px;
+    right: 0;
+    height: 588px;
+    width: calc(100% - 300px);
+    padding: 0px 40px 5px;
+    overflow-y: scroll;
+    transition: .3s;
+}
+
+.main--content.active {
+    width: calc(100% - 103px);
+}
+
+.facreg
+{
+    
+    margin-bottom: 60px;
+}
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    margin-top: 30px;
+}
+
+.section--title {
+    font-weight: 400;
+}
+
+.form
+{
+    width: auto;
+    height: auto;
+    background: linear-gradient(rgba(251, 130, 108, 0.775)20%,rgba(99, 115, 255, 0.5));
+    position: absolute;
+    top: 60px;
+    left: 200px;
+    border-radius: 10px;
+    border: 2.5px solid rgb(255, 255, 255);
+    padding: 25px;
+    align-items: center;
+}
+
+.form h2
+{
+    width: auto;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    text-align: center;
+    font-weight: bolder;
+    color: #fff;
+    font-size: 30px;
+    margin: 2px;
+    padding: 8px;
+}
+
+.form input
+{
+    width: 600px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0);
+    border-radius: 8px;
+    border: 2px solid rgba(15, 85, 156, 0.881);
+    color: rgb(255, 255, 255);
+    font-size: 15px;
+    letter-spacing: 1px;
+    margin-top: 40px;
+    font-family: sans-serif;
+}
+
+.form input:focus
+{
+    outline: none;
+}
+
+::placeholder
+{
+    columns: rgb(255, 255, 255);
+    font-family: Arial;
+    color: rgb(0, 0, 0);
+}
+
+.loginbutton
+{
+    width: 350px;
+    height: 45px;
+    background: rgb(255, 255, 255);
+    margin-top: 40px;
+    margin-left: 120px;
+    font-size: 25px;
+    font-family: Impact;
+    border-radius: 15px;
+    cursor: #fff;
+    transition: 0.3s ease-in-out;
+}
+
+.loginbutton:hover
+{
+    background: rgba(255, 238, 0, 0.916);
+}
+
+.loginbutton a
+{
+    text-decoration: none;
+    color: black;
+}
+
+.loginbutton ::-ms-value:hover
+{
+    color: green;
+    font-size: 27px;
+}
+.recent--patients {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 620px;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    border-width: 2px;
+    border: solid rgb(0, 0, 0);
+    color: #000000;
+}
+
+.add 
+{
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: #ffffff;
+    background-color: #5073fb;
+    color: rgb(255, 255, 255);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.add:hover 
+{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.add i 
+{
+    margin-right: 10px;
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 50%;
+    color: #000;
+}
+
+.table {
+    height: 510px;
+    overflow-y: scroll;
+    /* overflow-x: scroll; */
+    /* border-width: 3px;*/
+}
+
+table {
+    padding: 15px;
+    width: 100%;
+    text-align: left;
+}
+
+table, td {
+    border: 1px solid;
+    padding: 10px;
+  }
+  
+th {
+    border: 2px solid;
+    padding-block: 5px;
+    margin: 0px;
+    text-align: center ;
+}
+
+.table-1
+{
+    height: 100%;
+    overflow-y: none;
+    /* overflow-x: scroll; */
+    /* border-width: 3px;*/
+}
+
+.table-2 table
+{
+    width: 45%;
+    height: 10px;
+    margin-bottom: 5px;
+    overflow-y: scroll;
+}
+
+.table-3 table
+{
+    width: 75%;
+}
+
+.addbtn
+{
+    background-color: #5073ff;
+    color: rgb(255, 255, 255);
+}

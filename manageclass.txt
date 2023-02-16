@@ -1,0 +1,28 @@
+<h3>Category Management</h3>
+        <div class="table">
+            <table>
+                <thead>
+                    <tr>
+                        <th >category_title</th>
+                        <th >Manage</th>
+                    </tr>
+                </thead>
+            <!-- PHP CODE TO FETCH DATA FROM ROWS-->
+                <?php
+                // LOOP TILL END OF DATA
+                    while($rows=$result->fetch_assoc())
+                    {
+                ?>
+                        <tr>
+                        <!-- FETCHING DATA FROM EACH
+                        ROW OF EVERY COLUMN -->
+                        <td><?php echo $rows['category_title'];?></td>
+                        <td><a href="cat_remove.php?category_id=<?php echo $rows['category_id'];?>"><button style="color: White; background-color:red;">Deactivate</button></a></tb>
+                        </tr>
+                <?php
+                    }
+                ?>
+            </table>
+
+            
+        </div> 
