@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="facstyle.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-    <title>Dashboard</title>
+    <title>Faculty Dashboard</title>
 </head>
 
 <body>
@@ -28,16 +28,16 @@
                     <div class="picon chat">
                         <span>
                             <?php
-                                echo $_SESSION['email'];
-                                // $mail = $_SESSION['email'];
-                                // $sql = "SELECT * FROM `login_table` where useremail = '$mail'";
-                                // $result = mysqli_query($con, $sql);
-                                // $rows = $result->fetch_assoc();
-                                // $id = $rows['userid'];
-                                // $sqli = 'select * from adminregisterfaculty where facultyid = "$id"';
-                                // $rx = mysqli_query($con, $sqli);
-                                // $rst = $rx->fetch_assoc();
-                                // echo $rst['facultyname'];
+                                // echo $_SESSION['email'];
+                                $mail = $_SESSION['email'];
+                                $sql = "SELECT * FROM `login_table` where useremail = '$mail'";
+                                $result = mysqli_query($con, $sql);
+                                $rows = $result->fetch_assoc();
+                                $id = $rows['userid'];
+                                $sqli = "select * from adminregisterfaculty where facultyid = '$id'";
+                                $rx = mysqli_query($con, $sqli);
+                                $rst = $rx->fetch_assoc();
+                                echo $rst['facultyname'];
                             ?>
                         </span>
                         <span><img class="picon profile" src="profile.jpg" alt="PIC"></span>
@@ -96,7 +96,7 @@
             </ul>
             <ul class="sidebar--bottom-items">
                 <li>
-                    <a href="#">
+                    <a href="fac_changepass.php">
                         <span class="icon icon-7"><i class="ri-settings-3-line"></i></span>
                         <span class="sidebar--item">Settings</span>
                     </a>
@@ -163,7 +163,7 @@
 
             <div class="recent--patients">
                 <div class="title">
-                    <h2 class="section--title"><b>Faculties</b></h2>
+                    <h2 class="section--title"><b>Students</b></h2>
                     <a href="managefaculty.php"><button class="add"> <i class="ri-edit-line"></i> Edit Details</button></a>
                 </div>
                 <div class="table">
@@ -177,8 +177,78 @@
                             </tr>
                         </thead>
                         <tbody> 
+                            <?php
+                                $user = 'root';
+                                $password = '';
+                                
+                                // Database name is registration
+
+                                $database = 'catechism';
+                                $servername='localhost';
+                                $mysqli = new mysqli($servername, $user, $password, $database);
+                                
+                                // Checking for connections
+
+                                if ($mysqli->connect_error) 
+                                {
+                                    die('Connect Error (' .$mysqli->connect_errno . ') '.$mysqli->connect_error);
+                                }
+                                
+                                // SQL query to select data from database
+
+                                $sql1="SELECT * FROM `adminregisterstudent` order by studentname";
+                                $res=mysqli_query($con,$sql);
+                                $count=mysqli_num_rows($res);
+                                if($count>0)
+                                {
+                                $result = $mysqli->query($sql1);
+                                $mysqli->close();                                
+                            ?>
                             
-                            
+                            <!-- PHP CODE TO FETCH DATA FROM ROWS -->
+                            <?php
+                                // LOOP TILL END OF DATA
+                                while($rows=$result->fetch_assoc())
+                                {
+                            ?>
+                                    <tr>
+                                        <!-- FETCHING DATA FROM EACH
+                                            ROW OF EVERY COLUMN -->
+                                            <td><?php echo $rows['studentname'];?></td>
+                                            <td><?php echo $rows['studentmobile'];?></td>
+                                        <?php
+                                            $lid = $rows['studentid'];
+                                            $emailval='';
+                                            $query1="SELECT * FROM login_table where userid = '$lid' ";
+                                            $data1 = mysqli_query($con,$query1);
+                                            while($res1=mysqli_fetch_assoc($data1))
+                                            {
+                                                    $emailval = $res1['useremail'];
+                                            }
+                                        ?>
+                                        <td><?php echo $emailval;?></td>
+                                        <td>
+                                            <?php
+                                                if ($rows['status']==1)
+                                                {
+                                            ?>
+                                                    <a href="?type=status&operation=deactive&id=<?php echo $rows['studregid'];?>"><button style="color: White; background-color:red; width:80px; height:30px;">Deactivate</button></a>
+                                            <?php
+                                                } 
+                                                else
+                                                { 
+                                            ?>
+                                                    <a href="?type=status&operation=active&id=<?php echo $rows['studregid'];?>"><button style="color: White; background-color:green; width:80px; height:30px;">Activate</button></a>
+                                                
+                                            <?php
+                                                }
+                                            ?> 
+                                        </td>
+                                    </tr>
+                                    <?php
+                                }
+                            }
+                            ?> 
                         </tbody>
                     </table>
                 </div>

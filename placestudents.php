@@ -12,22 +12,22 @@
         $cg = $result3->fetch_assoc();
         $cid = $cg['classid'];
 
-        $query4 = "select * from tbl_div where division='$div'";
-        $result4 = $con->query($query4);
-        $dg = $result4->fetch_assoc();
-        $did = $dg['divid'];
+        // $query4 = "select * from tbl_div where division='$div'";
+        // $result4 = $con->query($query4);
+        // $dg = $result4->fetch_assoc();
+        // $did = $dg['divid'];
 
         $query5 = "select * from adminregisterstudent where studentname = '$fac'";
         $result5 = $con->query($query5);
         $fg = $result5->fetch_assoc();
         $fid = $fg['studentid'];
-        $CC = mysqli_query($con, "select * from assoclass where class_id = '$cid' and div_id = '$did'");
+        $CC = mysqli_query($con, "select * from assoclass where class_id = '$cid' and div_id = '$div'");
         $xx = $CC->fetch_assoc();
         $x = $xx['assoc_id'];
-        if($CC->num_rows>0)
-        {
-            echo "<script>alert('Already assigned to the same class...'); window.location.href='placestudents.php';</script>";
-        }
+        // if($CC->num_rows>0)
+        // {
+        //     echo "<script>alert('Already assigned to the same class...'); window.location.href='placestudents.php';</script>";
+        // }
         $CC1 = mysqli_query($con, "select * from adminregisterstudent where studentid = '$fid' ");
         $a = $CC1->fetch_assoc();
         $aaa = $a['studentclass'];
@@ -53,7 +53,24 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="managefacultystyle.css">
         <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
         <title>Dashboard</title>
+
+        <script>
+            function get_div(dvn)
+            {
+                // console.log(dvn);
+                $.ajax({
+                    type: "POST",
+                    url: "get_dvn.php",
+                    data: 'divsn_id='+dvn,
+                    success: function(data) 
+                    {
+                        $("#d").html(data);    
+                    }
+                });
+            }
+        </script>
     </head>
 
     <body>
@@ -104,7 +121,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="attendance.php">
+                        <a href="attendview.php">
                             <span class="icon icon-4"><i class="ri-calendar-2-line"></i></span>
                             <span class="sidebar--item">Attendance</span>
                         </a>
@@ -132,6 +149,12 @@
                         <span class="topbar--items">Create Class</span> 
                     </a>
                 </span>
+                <span class="topbar--item">
+                    <a href="classoptions.php" style="margin-right: 20px;">
+                        <i class="ri-line-chart-line"></i>
+                        <span class="topbar--items">Class Options</span> 
+                    </a>
+                </span>
                 <span class="topbar--item" >
                     <a href="assignteacher.php">
                         <i class="ri-line-chart-line"></i>
@@ -144,11 +167,17 @@
                         Place Students
                     </a>
                 </span>
+                <span class="topbar--item">
+                    <a href="viewclass.php">
+                        <i class="ri-line-chart-line"></i>
+                        View Class
+                    </a>
+                </span>
             </div>
             <div class="main--content">
             <form action="#" method="post">  
                     <div class="title">
-                        <h2 class="section--title">Select a class and Assign faculties...</h2>
+                        <h2 class="section--title">Select a class and Assign students...</h2>
                     </div>
                     <div class="table-3">
                         <table>
@@ -160,21 +189,25 @@
                                     Select a division
                                 </th>
                                 <th>
-                                    Select a Faculty
+                                    Select a Student
                                 </th>
                             </tr>
                             <tr>
                                 <td>
-                                    <select type="text" name="c" id="c">
+                                    <select type="text" name="c" id="c" onChange="get_div(this.value);">
+                                        <option value="">Select a class</option>
                                         <?php
-                                            $q2 = "select * from catclass";
+                                            $q2 = "select * from catclass order by class";
                                             $r2 = mysqli_query($con, $q2);
 
-                                            if (mysqli_num_rows($r2) > 0) {
-                                                // output data of each row
+                                            if (mysqli_num_rows($r2) > 0) 
+                                            {
+                                                 // output data of each row
                                                 while($row = mysqli_fetch_assoc($r2)) 
                                                 {
-                                                echo "<option>".$row["class"]."</option>";
+                                        ?>
+                                                <option value="<?php echo $row['classid'];?>"><?php echo $row['class'];?></option>;
+                                        <?php
                                                 }
                                             }
                                         ?>
@@ -182,25 +215,15 @@
                                 </td>
                                 <td>
                                     <select type="text" name="d" id="d">
-                                        <?php
-                                            $q4 = "select * from tbl_div";
-                                            $r4 = mysqli_query($con, $q4);
-
-                                            if (mysqli_num_rows($r4) > 0)
-                                            {
-                                                // output data of each row
-                                                while($row = mysqli_fetch_assoc($r4))
-                                                {
-                                                echo "<option>".$row["division"]."</option>";
-                                                }
-                                            }                                        
-                                        ?>
+                                        <option value="">
+                                            Select Division
+                                        </option>
                                     </select>
                                 </td>
                                 <td>
                                     <select type="text" name="f" id="f">
                                         <?php
-                                            $q5 = "select * from adminregisterstudent";
+                                            $q5 = "select * from adminregisterstudent where studentclass = 0 order by studentname";
                                             $r5 = mysqli_query($con, $q5);
 
                                             if (mysqli_num_rows($r5) > 0)
@@ -210,7 +233,7 @@
                                                 {
                                                 echo "<option>".$row["studentname"]."</option>";
                                                 }
-                                            }                                        
+                                            }                                    
                                         ?>
                                     </select>
                                 </td>

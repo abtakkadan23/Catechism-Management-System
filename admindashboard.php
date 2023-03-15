@@ -5,23 +5,27 @@
 
 
 <?php
-    if(isset($_GET['type']) && $_GET['type']!=''){
-    $type=($_GET['type']);
+    if(isset($_GET['type']) && $_GET['type']!='')
+    {
+        $type=($_GET['type']);
 
-    if($type=='status'){
-        $operation=($_GET['operation']);
-        $id=($_GET['id']);
+        if($type=='status')
+        {
+            $operation=($_GET['operation']);
+            $id=($_GET['id']);
 
-        if($operation=='active'){
-        $status='1';
+            if($operation=='active')
+            {
+                $status='1';
+            }
+            else
+            {
+                $status='0';
+            }
+            $update_status="UPDATE adminregisterstudent set status='$status'where studregid='$id'";
+            $del1 = mysqli_query($con,"UPDATE login_table SET status='$status' WHERE userid='$id';");
+            mysqli_query($con,$update_status);
         }
-        else{
-        $status='0';
-        }
-        $update_status="UPDATE adminregisterstudent set status='$status'where studregid='$id'";
-        $del1 = mysqli_query($con,"UPDATE login_table SET status='$status' WHERE userid='$id';");
-        mysqli_query($con,$update_status);
-    }
     }
 ?>
 
@@ -35,7 +39,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="adminstyle.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-    <title>Dashboard</title>
+    <title>Administrator Dashboard</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
@@ -89,7 +93,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="attendance.php">
+                    <a href="attendview.php">
                         <span class="icon icon-4"><i class="ri-calendar-2-line"></i></span>
                         <span class="sidebar--item">Attendance</span>
                     </a>
@@ -114,7 +118,7 @@
         <div class="main--content">
             <div class="overview">
                 <div class="title">
-                    <h2 class="section--title"> <b>Overview </b></h2>
+                    <h2 class="section--title"> <b> <h2> Overview </h2> </b></h2>
                     <!--
                     <select name="date" id="date" class="dropdown">
                         <option value="today">Today</option>
@@ -126,6 +130,38 @@
                     -->
                 </div>
                 <div class="cards">
+                    
+                    <div class="card card-3">
+                        <div class="card--data">
+                            <div class="card--content">
+                                <h5 class="card--title">Total Classes</h5>
+                                <h1>
+                                    <?php 
+                                        $result = mysqli_query($con,"SELECT * from assoclass");
+                                        echo mysqli_num_rows($result);
+                                    ?>
+                                </h1>
+                            </div>
+                            <i class="ri-user-line card--icon--lg"></i>
+                        </div>
+                    </div>
+
+                    <div class="card card-2">
+                        <div class="card--data">
+                            <div class="card--content">
+                                <h5 class="card--title">Total Faculties</h5>
+                                <h1>
+                                    <?php 
+                                        $result = mysqli_query($con,"SELECT * from adminregisterfaculty where status = 1");
+                                        echo mysqli_num_rows($result);
+                                    ?>
+                                </h1>
+                            </div>
+                            <i class="ri-user-line card--icon--lg"></i>
+                        </div>
+                    </div>
+
+
                     <div class="card card-1">
                         <div class="card--data">
                             <div class="card--content">
@@ -139,18 +175,27 @@
                             </div>
                             <i class="ri-user-line card--icon--lg"></i>
                         </div>
-                        <!--
-                        <div class="card--stats">
-                            <span><i class="ri-bar-chart-fill card--icon stat--icon"></i>65%</span>
-                            <span><i class="ri-arrow-up-s-fill card--icon up--arrow"></i>10</span>
-                            <span><i class="ri-arrow-down-s-fill card--icon down--arrow"></i>2</span>
-                        </div>
-                        -->
                     </div>
+
                     <div class="card card-3">
                         <div class="card--data">
                             <div class="card--content">
-                                <h5 class="card--title">Removed Students</h5>
+                                <h5 class="card--title">Deactivated Faculties</h5>
+                                <h1>
+                                    <?php 
+                                        $result = mysqli_query($con,"SELECT * from adminregisterfaculty where status = 0");
+                                        echo mysqli_num_rows($result);
+                                    ?>
+                                </h1>
+                            </div>
+                            <i class="ri-user-line card--icon--lg"></i>
+                        </div>
+                    </div>
+
+                    <div class="card card-3">
+                        <div class="card--data">
+                            <div class="card--content">
+                                <h5 class="card--title">Deactivated Students</h5>
                                 <h1>
                                     <?php 
                                         $result = mysqli_query($con,"SELECT * from adminregisterstudent where status = 0");
@@ -168,57 +213,6 @@
                         </div>
                         -->
                     </div>
-                    <div class="card card-2">
-                        <div class="card--data">
-                            <div class="card--content">
-                                <h5 class="card--title">Total Faculties</h5>
-                                <h1>
-                                    <?php 
-                                        $result = mysqli_query($con,"SELECT * from adminregisterfaculty where status = 1");
-                                        echo mysqli_num_rows($result);
-                                    ?>
-                                </h1>
-                            </div>
-                            <i class="ri-user-line card--icon--lg"></i>
-                        </div>
-                        <!--
-                        <div class="card--stats">
-                            <span><i class="ri-bar-chart-fill card--icon stat--icon"></i>82%</span>
-                            <span><i class="ri-arrow-up-s-fill card--icon up--arrow"></i>230</span>
-                            <span><i class="ri-arrow-down-s-fill card--icon down--arrow"></i>45</span>
-                        </div>
-                        -->
-                    </div>
-                    <div class="card card-3">
-                        <div class="card--data">
-                            <div class="card--content">
-                                <h5 class="card--title">Removed Faculties</h5>
-                                <h1>
-                                    <?php 
-                                        $result = mysqli_query($con,"SELECT * from adminregisterfaculty where status = 0");
-                                        echo mysqli_num_rows($result);
-                                    ?>
-                                </h1>
-                            </div>
-                            <i class="ri-user-line card--icon--lg"></i>
-                        </div>
-                    </div>
-                    <!--
-                    <div class="card card-4">
-                        <div class="card--data">
-                            <div class="card--content">
-                                <h5 class="card--title">Beds Available</h5>
-                                <h1>15</h1>
-                            </div>
-                            <i class="ri-hotel-bed-line card--icon--lg"></i>
-                        </div>
-                        <div class="card--stats">
-                            <span><i class="ri-bar-chart-fill card--icon stat--icon"></i>8%</span>
-                            <span><i class="ri-arrow-up-s-fill card--icon up--arrow"></i>11</span>
-                            <span><i class="ri-arrow-down-s-fill card--icon down--arrow"></i>2</span>
-                        </div>
-                    </div>
-                    -->
                 </div>
             </div>
             <!--
@@ -434,20 +428,23 @@
                                         <td><?php echo $emailval;?></td>
                                         <td>
                                             <?php
-                                                if ($rows['status']==1){?>
+                                                if ($rows['status']==1)
+                                                {
+                                            ?>
                                                     <a href="?type=status&operation=deactive&id=<?php echo $rows['studregid'];?>"><button style="color: White; background-color:red; width:80px; height:30px;">Deactivate</button></a>
-                                                <?php
+                                            <?php
                                                 } 
-                                                else{ 
-                                                ?>
+                                                else
+                                                { 
+                                            ?>
                                                     <a href="?type=status&operation=active&id=<?php echo $rows['studregid'];?>"><button style="color: White; background-color:green; width:80px; height:30px;">Activate</button></a>
                                                 
-                                                <?php
+                                            <?php
                                                 }
                                             ?> 
                                         </td>
                                     </tr>
-                                    <?php
+                            <?php
                                 }
                             }
                             ?>

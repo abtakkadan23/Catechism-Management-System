@@ -2,6 +2,7 @@
     include('session.php');
     include('config.php');
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,6 +12,48 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="managefacultystyle.css">
         <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <script>
+            function get_div(dvn)
+            {
+                // console.log(dvn);
+                $.ajax(
+                {
+                    type: "POST",
+                    url: "get_dvn.php",
+                    data: 'divsn_id='+dvn,
+                    success: function(data) 
+                    {
+                        $("#d").html(data);    
+                    }
+                });
+            }
+
+            $(document).ready(function() 
+            {
+                $('#data-form').submit(function(event) 
+                {
+                    event.preventDefault();
+                    
+                    var formData = $(this).serialize();
+                    
+                    $.ajax(
+                    {
+                        url: 'facget_stattdate.php',
+                        method: 'POST',
+                        data: formData,
+                        success: function(response) 
+                        {
+                            $('#data-container').html(response);
+                        },
+                        error: function(xhr, status, error) 
+                        {
+                            console.log(xhr.responseText);
+                        }
+                    });
+                });
+            });
+        </script>
         <title>Dashboard</title>
     </head>
 
@@ -49,20 +92,20 @@
                             <span class="sidebar--item">Registration</span>
                         </a>
                     </li>
-                <li>
-                    <a href="managefaculty.php">
-                        <span class="icon icon-2"><i class="ri-user-line"></i></span>
-                        <span class="sidebar--item">Manage Members</span>
-                    </a>
-                </li>
                     <li>
-                        <a href="manageclass.php" id="active--link">
+                        <a href="managefaculty.php">
+                            <span class="icon icon-2"><i class="ri-user-line"></i></span>
+                            <span class="sidebar--item">Manage Members</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="manageclass.php" >
                             <span class="icon icon-6"><i class="ri-line-chart-line"></i></span>
                             <span class="sidebar--item">Manage Class</span>
                         </a>
                     </li>
                     <li>
-                        <a href="attendview.php">
+                        <a href="attendview.php" id="active--link">
                             <span class="icon icon-4"><i class="ri-calendar-2-line"></i></span>
                             <span class="sidebar--item">Attendance</span>
                         </a>
@@ -82,131 +125,105 @@
                         </a>
                     </li>
                 </ul>            
-            </div>  
+            </div> 
             <div class="topbar" style="display:block;">
                 <span class="topbar--item">
-                    <a href="manageclass.php" style="margin-right: 20px;" id="active--link">
+                    <a href="attendview.php" style="margin-right: 20px;" id="active--link">
                         <i class="ri-line-chart-line"></i>
-                        <span class="topbar--items">Create Class</span> 
+                        View Students'
                     </a>
                 </span>
                 <span class="topbar--item">
-                    <a href="classoptions.php" style="margin-right: 20px;">
+                    <a href="facattendtake.php">
                         <i class="ri-line-chart-line"></i>
-                        <span class="topbar--items">Class Options</span> 
+                        Take Faculties'
                     </a>
                 </span>
                 <span class="topbar--item">
-                    <a href="assignteacher.php">
+                    <a href="facattendview.php" style="margin-right: 20px;"">
                         <i class="ri-line-chart-line"></i>
-                        Assign Teachers
-                    </a>
-                </span>
-                <span class="topbar--item">
-                    <a href="placestudents.php">
-                        <i class="ri-line-chart-line"></i>
-                        Place Students
-                    </a>
-                </span>
-                <span class="topbar--item">
-                    <a href="viewclass.php">
-                        <i class="ri-line-chart-line"></i>
-                        View Class
+                        View Faculties'
                     </a>
                 </span>
             </div>
             <div class="main--content">
-                <form action="createClass.php" method="post">  
+                <form action="" method="POST" id="data-form">  
                     <div class="title">
-                        <h2 class="section--title">Add new class...</h2>
-                    </div>
-                    <div class="table-3">
-                        <table>
-                            <tr>
-                                <td>
-                                    Enter class : 
-                                    <input type="text" id="cls" name="cls" required>
-                                </td>
-                                <td><input type="submit" value="Add" id="submit" name="submit" class="addbtn" style="height: 100%; width: 100%;"></td>
-                            </tr>
-                        </table>
-                    </div>
-                </form>
-                <form action="createDiv.php" method="post">  
-                    <div class="title">
-                        <h2 class="section--title">Add new division...</h2>
-                    </div>
-                    <div class="table-3">
-                        <table>
-                            <tr>
-                                <td>
-                                    Enter division : 
-                                    <input type="text" id="div" name="div" required>
-                                </td>
-                                <td><input type="submit" value="Add" id="submit" name="submit" class="addbtn" style="height: 100%; width: 100%;"></td>
-                            </tr>
-                        </table>
-                    </div>
-                </form>
-                <form action="setclass.php" method="post">  
-                    <div class="title">
-                        <h2 class="section--title">Set a new class...</h2>
+                        <h2 class="section--title">Select a class and click view...</h2>
                     </div>
                     <div class="table-3">
                         <table>
                             <tr>
                                 <th>
-                                    Select a class
+                                    Select class
                                 </th>
                                 <th>
-                                    Select a division
+                                    Select division
+                                </th>
+                                <th>
+                                    Select date
                                 </th>
                             </tr>
                             <tr>
                                 <td>
-                                    <select type="text" name="c" id="c">
+                                    <select type="text" name="c" id="c" onChange="get_div(this.value);">
+                                        <option value="">Select a class</option>
                                         <?php
-                                            $q2 = "select * from catclass";
+                                            $q2 = "select * from catclass order by class";
                                             $r2 = mysqli_query($con, $q2);
 
-                                            if (mysqli_num_rows($r2) > 0) {
-                                                // output data of each row
+                                            if (mysqli_num_rows($r2) > 0) 
+                                            {
+                                                 // output data of each row
                                                 while($row = mysqli_fetch_assoc($r2)) 
                                                 {
-                                                echo "<option>".$row["class"]."</option>";
+                                        ?>
+                                                <option value="<?php echo $row['classid'];?>"><?php echo $row['class'];?></option>;
+                                        <?php
                                                 }
-                                            }                                        
+                                            }
                                         ?>
                                     </select>
                                 </td>
                                 <td>
                                     <select type="text" name="d" id="d">
-                                        <?php
-                                            $q4 = "select * from tbl_div";
-                                            $r4 = mysqli_query($con, $q4);
-
-                                            if (mysqli_num_rows($r4) > 0)
-                                            {
-                                                // output data of each row
-                                                while($row = mysqli_fetch_assoc($r4))
-                                                {
-                                                echo "<option>".$row["division"]."</option>";
-                                                }
-                                            }                                        
-                                        ?>
+                                        <option value="">
+                                            Select Division
+                                        </option>
                                     </select>
                                 </td>
+                                <td>
+                                <!-- <input type="date" placeholder="Select date" id="atdate" name="atdate"><br> -->
+                                <select type="text" name="d" id="d">
+                                    <option value="">Select a date</option>
+                                    <?php
+                                        $q2 = mysqli_query($con, "SELECT DISTINCT s_atdate FROM tbl_studatt");
+
+                                        if (mysqli_num_rows($q2) > 0) 
+                                        {
+                                                // output data of each row
+                                            while($row = mysqli_fetch_assoc($q2)) 
+                                            {
+                                    ?>
+                                            <option value="<?php echo $row['s_atdate'];?>"><?php echo $row['s_atdate'];?></option>;
+                                    <?php
+                                            }
+                                        }
+                                    ?>
+                                </select>
+                            </td>
                                 <td style="border: none; ">
-                                    <input type="submit" value="Associate" id="submit" name="submit" class="addbtn" style="height: 30px; width: 100%;">
+                                    <input type="submit" value="View" id="submit" name="submit" class="addbtn" style="height: 30px; width: 100%;">
                                 </td>
                             </tr>
                         </table>
                     </div>
                 </form>
                 <br><br>
-            </div>
+                <div class="table-2x" id="data-container">
+                </div>
+            </div>      
         </section>
-        <script src="admin.js"></script>
     </body>
 
 </html>

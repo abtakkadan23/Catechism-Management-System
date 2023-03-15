@@ -104,10 +104,12 @@ else
                 <form action="adminlogin.php" method="post">
                     <input type="email" placeholder="Enter Email" id="adminemail" name="adminemail"><br>
                     <input type="password" placeholder="Enter Password" id="adminpassword" name="adminpassword"><br>
-                    <br><center>
-                    <span class="error_form" id="captcha_message"></span>
-                    <div class="g-recaptcha" data-sitekey="6LehFWskAAAAAOvqcRIdOnUvlcZomUSwTjVLGFnf"></div><br>
-                    <a href="forgot.php">Forgot password</a></center>
+                    <br>
+                    <center>
+                        <span class="error_form" id="captcha_message"></span>
+                        <div class="g-recaptcha" data-sitekey="6LehFWskAAAAAOvqcRIdOnUvlcZomUSwTjVLGFnf"></div><br>
+                        <a href="forgot.php">Forgot password</a>
+                    </center>
                     <button type="submit" name="submit" id="submit" class="loginbutton">
                         Login
                     </button>

@@ -1,7 +1,10 @@
 <?php
     include('session.php');
     include('config.php');
+
+    
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -85,18 +88,18 @@
             </div>  
             <div class="topbar" style="display:block;">
                 <span class="topbar--item">
-                    <a href="manageclass.php" style="margin-right: 20px;" id="active--link">
+                    <a href="manageclass.php" style="margin-right: 20px;">
                         <i class="ri-line-chart-line"></i>
                         <span class="topbar--items">Create Class</span> 
                     </a>
                 </span>
                 <span class="topbar--item">
-                    <a href="classoptions.php" style="margin-right: 20px;">
+                    <a href="classoptions.php" style="margin-right: 20px;" id="active--link">
                         <i class="ri-line-chart-line"></i>
                         <span class="topbar--items">Class Options</span> 
                     </a>
                 </span>
-                <span class="topbar--item">
+                <span class="topbar--item" >
                     <a href="assignteacher.php">
                         <i class="ri-line-chart-line"></i>
                         Assign Teachers
@@ -116,94 +119,128 @@
                 </span>
             </div>
             <div class="main--content">
-                <form action="createClass.php" method="post">  
-                    <div class="title">
-                        <h2 class="section--title">Add new class...</h2>
-                    </div>
-                    <div class="table-3">
+                <h2>Remove a class</h2><br>
+                <div class="table-22"> 
+                    <div>
                         <table>
                             <tr>
-                                <td>
-                                    Enter class : 
-                                    <input type="text" id="cls" name="cls" required>
-                                </td>
-                                <td><input type="submit" value="Add" id="submit" name="submit" class="addbtn" style="height: 100%; width: 100%;"></td>
-                            </tr>
-                        </table>
-                    </div>
-                </form>
-                <form action="createDiv.php" method="post">  
-                    <div class="title">
-                        <h2 class="section--title">Add new division...</h2>
-                    </div>
-                    <div class="table-3">
-                        <table>
-                            <tr>
-                                <td>
-                                    Enter division : 
-                                    <input type="text" id="div" name="div" required>
-                                </td>
-                                <td><input type="submit" value="Add" id="submit" name="submit" class="addbtn" style="height: 100%; width: 100%;"></td>
-                            </tr>
-                        </table>
-                    </div>
-                </form>
-                <form action="setclass.php" method="post">  
-                    <div class="title">
-                        <h2 class="section--title">Set a new class...</h2>
-                    </div>
-                    <div class="table-3">
-                        <table>
-                            <tr>
-                                <th>
-                                    Select a class
-                                </th>
-                                <th>
-                                    Select a division
+                                <th colspan="2">
+                                    CLASSES
                                 </th>
                             </tr>
+                                <?php
+                                    $query1 = "select * from catclass order by class";
+                                    $res = mysqli_query($con, $query1);
+                                    while($rows = $res->fetch_assoc())
+                                    {
+                                ?>
                             <tr>
-                                <td>
-                                    <select type="text" name="c" id="c">
-                                        <?php
-                                            $q2 = "select * from catclass";
-                                            $r2 = mysqli_query($con, $q2);
-
-                                            if (mysqli_num_rows($r2) > 0) {
-                                                // output data of each row
-                                                while($row = mysqli_fetch_assoc($r2)) 
-                                                {
-                                                echo "<option>".$row["class"]."</option>";
-                                                }
-                                            }                                        
-                                        ?>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select type="text" name="d" id="d">
-                                        <?php
-                                            $q4 = "select * from tbl_div";
-                                            $r4 = mysqli_query($con, $q4);
-
-                                            if (mysqli_num_rows($r4) > 0)
-                                            {
-                                                // output data of each row
-                                                while($row = mysqli_fetch_assoc($r4))
-                                                {
-                                                echo "<option>".$row["division"]."</option>";
-                                                }
-                                            }                                        
-                                        ?>
-                                    </select>
-                                </td>
-                                <td style="border: none; ">
-                                    <input type="submit" value="Associate" id="submit" name="submit" class="addbtn" style="height: 30px; width: 100%;">
-                                </td>
+                                    <td>
+                                        <?php echo $rows['class']; ?>
+                                    </td>
+                                    <td style="width: 30%;"><a href="deleteclass.php?id=<?php echo $rows['classid'];?>"><button class="addbtn" style="height: 30px; width: 100%;">DELETE</button></a></td>
+                                    <!-- <td style="width: 30%;">
+                                        <input type="button" value="DELETE" name="del" id="del" class="addbtn" style="height: 30px; width: 100%;">
+                                    </td> -->
+                                <?php
+                                    }
+                                ?>
                             </tr>
                         </table>
                     </div>
-                </form>
+                </div><br><br>
+                <h2>Remove a division</h2><br>
+                <div class="table-22">
+                    <div>
+                        <table>
+                            <tr>
+                                <th colspan="2">
+                                    DIVISIONS
+                                </th>
+                            </tr>
+                                <?php
+                                    $query1 = "select * from tbl_div order by division";
+                                    $res = mysqli_query($con, $query1);
+                                    while($rws = $res->fetch_assoc())
+                                    {
+                                ?>
+                                <tr>
+                                    <td>
+                                        <?php echo $rws['division']; ?>
+                                    </td>
+                                    <td style="width: 30%;"><a href="deletediv.php?id=<?php echo $rws['divid'];?>"><button class="addbtn" style="height: 30px; width: 100%;">DELETE</button></a></td>
+                                    <!-- <td style="width: 30%;">
+                                        <input type="button" value="DELETE" name="del" id="del" class="addbtn" style="height: 30px; width: 100%;">
+                                    </td> -->
+                                <?php
+                                    }
+                                ?>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
                 <br><br>
+                <h2>Remove a batch</h2><br>
+                <div class="table-22">
+                    <div>
+                        <table>
+                            <tr>
+                                <td colspan = "4">
+                                    Available Classes
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    CLASS
+                                </th>
+                                <th>
+                                    DIVISION
+                                </th>
+                                <th>
+                                    ACTION
+                                </th>
+                            </tr>
+                                <?php
+                                    $query = "select * from assoclass";
+                                    $re = mysqli_query($con, $query);
+                                    while($ro = $re->fetch_assoc())
+                                    {
+                            ?>
+                            <tr>
+                                    <?php
+                                        $i = $ro['class_id'];
+                                        $query1 = "select * from catclass where classid = '$i'";
+                                        $res = mysqli_query($con, $query1);
+                                        while($rows = $res->fetch_assoc())
+                                        {  
+                                    ?>
+                                <td>
+                                            <?php echo $rows['class']; ?>
+                                </td>
+
+                                    <?php
+                                        }
+                                        $i = $ro['div_id'];
+                                        $query1 = "select * from tbl_div where divid = '$i'";
+                                        $res = mysqli_query($con, $query1);
+                                        while($rows = $res->fetch_assoc())
+                                        {
+                                    ?>
+                                <td>
+                                            <?php echo $rows['division']; ?>
+                                </td>
+
+                                    <?php
+                                        }
+                                    ?>
+                                <td style="width: 30%;"><a href="deleteassoc.php?id=<?php echo $ro['assoc_id'];?>"><button class="addbtn" style="height: 30px; width: 100%;">DELETE</button></a></td>
+                                <?php
+                                    }
+                                ?>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </div>
         </section>
         <script src="admin.js"></script>

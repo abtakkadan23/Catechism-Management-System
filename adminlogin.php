@@ -10,7 +10,8 @@
     {  
         $us=mysqli_real_escape_string($con, $_POST['adminemail']);
         $password=mysqli_real_escape_string($con, $_POST['adminpassword']);
-        $query="SELECT * FROM login_table WHERE useremail ='$us'and password='$password'";
+        // $query="SELECT * FROM login_table WHERE useremail ='$us'and password='$password'";
+        $query="select * from login_table where useremail='".$us."' AND password='".md5($password)."'";
         $res=mysqli_query($con,$query);
         
         if(mysqli_num_rows($res)>0)
@@ -30,7 +31,7 @@
                     header("Location:admindashboard.php");
                     $_SESSION['message']="You are Logged In Successfully";
                 }
-                elseif($row['role'] == 2 and $row['status'] == 1 and $row['verified'] == 1)
+                elseif($row['role'] == 2 and $row['status'] == 1)
                 {
                     session_start();
                     $_SESSION['email'] = $row['useremail'];

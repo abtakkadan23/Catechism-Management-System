@@ -45,7 +45,7 @@
                 $uid = $result3->fetch_assoc();
                 $uid1 = $uid['userid'];
 
-                $query="insert into adminregisterstudent (studentid, studentname, studentbname, studentgender, studenthname, studentmobile, studentdob, studentclass, studentfather, studentmother, role) values('$uid1', '$stuname', '$stubname', '$stugender', '$stuhname', '$stumobno', '$studob', '$stuclass', '$stufname', '$stumname', 3)";
+                $query="insert into adminregisterstudent (studentid, studentname, studentbname, studentgender, studenthname, studentmobile, studentdob, studentclass, studentfather, studentmother, role) values('$uid1', '$stuname', '$stubname', '$stugender', '$stuhname', '$stumobno', '$studob', 0, '$stufname', '$stumname', 3)";
                 
                 /*if ($con->query($query1) === TRUE and $con->query($query) === TRUE) */
                 $result = mysqli_query($con, $query);

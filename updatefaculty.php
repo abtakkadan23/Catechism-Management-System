@@ -26,7 +26,6 @@
         $facmobno = $_POST['facmobno'];
         $facemail = $_POST['facemail'];
         $facdob = $_POST['facdob'];
-        $faclass = $_POST['class'];
         $facdesig = $_POST['desig'];
         $facquali = $_POST['facqual'];
         $facjob = $_POST['facjob'];
@@ -42,7 +41,7 @@
         
         //checking empty condition
         if($facname=='' or $facbname == '' or $facgender == '' or $fachname == '' or $facmobno == '' or $facemail == '' or 
-        $facdob == '' or $faclass == '' or $facdesig == '' or $facquali == '' or $facjob == '' or $facfname == '' or $facmname == '' or $image=='')
+        $facdob == '' or $facdesig == '' or $facquali == '' or $facjob == '' or $facfname == '' or $facmname == '' or $image=='')
         {
             echo "<script>alert('Please fill all the fields.')</script>";
             exit();
@@ -56,7 +55,7 @@
         
         //$psword = md5($facpassword);password encryption to increase data security
         $query="update adminregisterfaculty set facultyname = '$facname', facultybname = '$facbname', facultygender = '$facgender', 
-        facultyhname = '$fachname', facultymobile = '$facmobno', facultydob = '$facdob', facultyclass = '$faclass', 
+        facultyhname = '$fachname', facultymobile = '$facmobno', facultydob = '$facdob', 
         facultydesig = '$facdesig', facultyqualif = '$facquali', facultyjob = '$facjob', facultyfather = '$facfname', facultymother = '$facmname', 
         role = '2', facultyimage = '$image' where facultyid = '$uid'";
         $query1="update login_table set useremail = '$facemail', role = '2' where userid = '$uid'";
@@ -123,7 +122,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="attendance.php">
+                    <a href="attendview.php">
                         <span class="icon icon-4"><i class="ri-calendar-2-line"></i></span>
                         <span class="sidebar--item">Attendance</span>
                     </a>
@@ -143,6 +142,15 @@
                     </a>
                 </li>
             </ul>            
+        </div>
+
+        <div class="topbar" style="display:block;">
+            <span class="topbar--item">
+                <a href="managefaculty.php" style="margin-right: 20px;">
+                    <i class="ri-arrow-left-circle-fill"></i>
+                    BACK
+                </a>
+            </span>
         </div>
 
         <div class="main--content">
@@ -234,26 +242,6 @@
                                         <div class="error"></div>
                                     </td>
                                     <td>
-                                        <p>Class :</p>
-                                        <?php
-                                            $option = $rows['facultyclass'];
-                                        ?>
-                                        <select name="class" id="class" octavalidate="R">
-                                            <?php
-                                                $q2 = "select * from catclass";
-                                                $r2 = mysqli_query($con, $q2);
-
-                                                if (mysqli_num_rows($r2) > 0) {
-                                                    // output data of each row
-                                                    while($row = mysqli_fetch_assoc($r2)) 
-                                                    {
-                                                    echo "<option>".$row["class"]."</option>";
-                                                    }
-                                                }                                        
-                                            ?>
-                                        </select>
-                                    </td>
-                                    <td>
                                         <p>Designation :</p>
                                         <?php
                                             $option = $rows['facultydesig'];
@@ -263,13 +251,13 @@
                                             <option value="Asst. Faculty" <?php if($option=="Asst. Faculty") echo 'selected="selected"'; ?>>Asst. Faculty</option>
                                         </select>
                                     </td>
-                                </tr>
-                                <tr>
                                     <td>
                                         <p>Qualifiction :</p>
                                         <input type="text" value="<?php echo $rows['facultyqualif'];?>" id="facqual" name="facqual" octavalidate="R"><br>
                                         <div class="error"></div>
                                     </td>
+                                </tr>
+                                <tr>
                                     <td>
                                         <p>Current Job :</p>
                                         <input type="text" value="<?php echo $rows['facultyjob'];?>" id="facjob" name="facjob" octavalidate="R"><br>
@@ -280,13 +268,13 @@
                                         <input type="text" value="<?php echo $rows['facultyfather'];?>" id="facfather" name="facfather" octavalidate="R"><br>
                                         <div class="error"></div>
                                     </td>
-                                </tr>
-                                <tr>
                                     <td>
                                         <p>Name of Mother :</p>
                                         <input type="text" value="<?php echo $rows['facultymother'];?>" id="facmother" name="facmother" octavalidate="R"><br>
                                         <div class="error"></div>
                                     </td>
+                                </tr>
+                                <tr>
                                     <td>
                                         <p>Upload Profile Photo :</p>
                                         <input type="file" placeholder="Upload your photo" id="facpic" name="facpic" accept="image/*" required><br>

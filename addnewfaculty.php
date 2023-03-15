@@ -63,7 +63,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="attendance.php">
+                    <a href="attendview.php">
                         <span class="icon icon-4"><i class="ri-calendar-2-line"></i></span>
                         <span class="sidebar--item">Attendance</span>
                     </a>

@@ -1,29 +1,43 @@
 <?php
     include('session.php');
     include('config.php');
+
     if(isset($_POST['submit']))
     {
-        $cls = $_POST['c'];
-        $div = $_POST['d']; 
-        $fac = $_POST['f'];
-        $query3 = "select * from catclass where class='$cls'";
-        $result3 = $con->query($query3);
-        $cg = $result3->fetch_assoc();
-        $cid = $cg['classid'];
+        $cid = $_POST['c'];
+        $did = $_POST['d']; 
+        $fid = $_POST['f'];
+        // $query3 = "select * from catclass where class='$cls'";
+        // $result3 = $con->query($query3);
+        // $cg = $result3->fetch_assoc();
+        // $cid = $cg['classid'];
 
-        $query4 = "select * from tbl_div where division='$div'";
-        $result4 = $con->query($query4);
-        $dg = $result4->fetch_assoc();
-        $did = $dg['divid'];
+        // $query4 = "select * from tbl_div where division='$div'";
+        // $result4 = $con->query($query4);
+        // $dg = $result4->fetch_assoc();
+        // $did = $dg['divid'];
 
-        $query5 = "select * from adminregisterfaculty where facultyname = '$fac'";
-        $result5 = $con->query($query5);
-        $fg = $result5->fetch_assoc();
-        $fid = $fg['facultyid'];
-        $CC = mysqli_query($con, "select * from assoclass where class_id = '$cid' and div_id = '$did' and facid = '$fid' ");
-        if($CC->num_rows>0)
+        // $query5 = "select * from adminregisterfaculty where facultyname = '$fac'";
+        // $result5 = $con->query($query5);
+        // $fg = $result5->fetch_assoc();
+        // $fid = $fg['facultyid'];
+        $CC = mysqli_query($con, "select * from assoclass where class_id = '$cid' and div_id = '$did'");
+        $cg = $CC->fetch_assoc();
+        $clsid = $cg['assoc_id'];
+        $cfac = $cg['facid'];
+        echo $clsid;
+
+        $CC1 = mysqli_query($con, "select * from adminregisterfaculty where facultyid = '$fid'");
+        $a = $CC1->fetch_assoc();
+        $aaa = $a['facultyclass'];
+
+        if($aaa == 0 and $cfac == 0)
         {
-            echo "<script>alert('Already assigned to the same facuty...'); window.location.href='assignteacher.php';</script>";
+            $query2 = "update assoclass set facid = '$fid' where class_id = '$cid' and div_id = '$did'";
+            $result1 = mysqli_query($con, $query2);
+            $query3 = "update adminregisterfaculty set facultyclass = '$clsid' where facultyid = '$fid'";
+            $resss = mysqli_query($con, $query3);
+            echo "<script>alert('Faculty assigned successfully...'); window.location.href='assignteacher.php';</script>"; 
         }
         // $CC1 = mysqli_query($con, "select * from assoclass where class_id = '$cid' and div_id = '$did' ");
         // if($CC1->num_rows>0)
@@ -32,9 +46,7 @@
         // }
         else
         {
-            $query2 = "update assoclass set facid = '$fid' where class_id = '$cid' and div_id = '$did'";
-            $result1 = mysqli_query($con, $query2);
-            echo "<script>alert('Faculty assigned successfully...'); window.location.href='assignteacher.php';</script>"; 
+            echo "<script>alert('Already assigned earlier...'); window.location.href='assignteacher.php';</script>";
         }
     }
 ?>
@@ -43,11 +55,28 @@
 
     <head>
         <meta charset="UTF-8">
+        <title>Dashboard</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="managefacultystyle.css">
         <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-        <title>Dashboard</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <script>
+            function get_div(dvn)
+            {
+                // console.log(dvn);
+                $.ajax({
+                    type: "POST",
+                    url: "get_dvn.php",
+                    data: 'divsn_id='+dvn,
+                    success: function(data) 
+                    {
+                        $("#d").html(data);    
+                    }
+                });
+            }
+        </script>
+        
     </head>
 
     <body>
@@ -85,12 +114,12 @@
                             <span class="sidebar--item">Registration</span>
                         </a>
                     </li>
-                <li>
-                    <a href="managefaculty.php">
-                        <span class="icon icon-2"><i class="ri-user-line"></i></span>
-                        <span class="sidebar--item">Manage Members</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="managefaculty.php">
+                            <span class="icon icon-2"><i class="ri-user-line"></i></span>
+                            <span class="sidebar--item">Manage Members</span>
+                        </a>
+                    </li>
                     <li>
                         <a href="manageclass.php" id="active--link">
                             <span class="icon icon-6"><i class="ri-line-chart-line"></i></span>
@@ -98,7 +127,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="attendance.php">
+                        <a href="attendview.php">
                             <span class="icon icon-4"><i class="ri-calendar-2-line"></i></span>
                             <span class="sidebar--item">Attendance</span>
                         </a>
@@ -126,6 +155,12 @@
                         <span class="topbar--items">Create Class</span> 
                     </a>
                 </span>
+                <span class="topbar--item">
+                    <a href="classoptions.php" style="margin-right: 20px;">
+                        <i class="ri-line-chart-line"></i>
+                        <span class="topbar--items">Class Options</span> 
+                    </a>
+                </span>
                 <span class="topbar--item" >
                     <a href="assignteacher.php" id="active--link">
                         <i class="ri-line-chart-line"></i>
@@ -136,6 +171,12 @@
                     <a href="placestudents.php">
                         <i class="ri-line-chart-line"></i>
                         Place Students
+                    </a>
+                </span>
+                <span class="topbar--item">
+                    <a href="viewclass.php">
+                        <i class="ri-line-chart-line"></i>
+                        View Class
                     </a>
                 </span>
             </div>
@@ -158,17 +199,21 @@
                                 </th>
                             </tr>
                             <tr>
-                                <td>
-                                    <select type="text" name="c" id="c">
+                            <td>
+                                    <select type="text" name="c" id="c" onChange="get_div(this.value);">
+                                        <option value="">Select a class</option>
                                         <?php
-                                            $q2 = "select * from catclass";
+                                            $q2 = "select * from catclass order by class";
                                             $r2 = mysqli_query($con, $q2);
 
-                                            if (mysqli_num_rows($r2) > 0) {
-                                                // output data of each row
+                                            if (mysqli_num_rows($r2) > 0) 
+                                            {
+                                                 // output data of each row
                                                 while($row = mysqli_fetch_assoc($r2)) 
                                                 {
-                                                echo "<option>".$row["class"]."</option>";
+                                        ?>
+                                                <option value="<?php echo $row['classid'];?>"><?php echo $row['class'];?></option>
+                                        <?php
                                                 }
                                             }
                                         ?>
@@ -176,36 +221,28 @@
                                 </td>
                                 <td>
                                     <select type="text" name="d" id="d">
-                                        <?php
-                                            $q4 = "select * from tbl_div";
-                                            $r4 = mysqli_query($con, $q4);
-
-                                            if (mysqli_num_rows($r4) > 0)
-                                            {
-                                                // output data of each row
-                                                while($row = mysqli_fetch_assoc($r4))
-                                                {
-                                                echo "<option>".$row["division"]."</option>";
-                                                }
-                                            }                                        
-                                        ?>
+                                        <option value="">
+                                            Select Division
+                                        </option>
                                     </select>
                                 </td>
                                 <td>
                                     <select type="text" name="f" id="f">
-                                        <?php
-                                            $q5 = "select * from adminregisterfaculty";
-                                            $r5 = mysqli_query($con, $q5);
+                                    <?php
+                                        $q5 = "select * from adminregisterfaculty where facultyclass = 0 and status != 0 order by facultyname";
+                                        $r5 = mysqli_query($con, $q5);
 
-                                            if (mysqli_num_rows($r5) > 0)
+                                        if (mysqli_num_rows($r5) > 0)
+                                        {
+                                            // output data of each row
+                                            while($row = mysqli_fetch_assoc($r5))
                                             {
-                                                // output data of each row
-                                                while($row = mysqli_fetch_assoc($r5))
-                                                {
-                                                echo "<option>".$row["facultyname"]."</option>";
-                                                }
-                                            }                                        
-                                        ?>
+                                    ?>
+                                                <option value="<?php echo $row['facultyid'];?>"><?php echo $row["facultyname"];?></option>
+                                    <?php
+                                            }
+                                        }                                        
+                                    ?>
                                     </select>
                                 </td>
                                 <td style="border: none; ">
@@ -216,7 +253,7 @@
                     </div>
                 </form>
                 <br><br>
-                <div class="table-2">
+                <div class="table-22">
                     <table>
                         <tr>
                             <td colspan = "4">
@@ -274,25 +311,25 @@
                                     $res = mysqli_query($con, $query1);
                                     while($rows = $res->fetch_assoc())
                                     {
-                                        if($i == 0)
+                                        if($i==0)
                                         {
                                 ?>
-                                <td>
-                                            <?php echo " "; ?>
-                                </td>
+                                        <td>
+                                            <?php echo "*"; ?>
+                                        </td>
                                 <?php
                                         }
                                         else
                                         {
                                 ?>
-                            <td>
+                                        <td>
                                             <?php echo $rows['facultyname']; ?>
-                            </td>
+                                        </td>
                             <?php
                                         }
                                     }
                             ?>
-                            <td style="width: 30%;"><a href="deleteassoc.php?id=<?php echo $ro['assoc_id'];?>"><button class="addbtn" style="height: 30px; width: 100%;">DELETE</button></a></td>
+                            <td style="width: 30%;"><a href="removefac.php?id=<?php echo $ro['assoc_id'];?>"><button class="addbtn" style="height: 30px; width: 100%;">REMOVE FACULTY</button></a></td>
                             <?php
                                 }
                             ?>

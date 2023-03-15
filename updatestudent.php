@@ -26,7 +26,6 @@
         $facmobno = $_POST['facmobno'];
         $facemail = $_POST['facemail'];
         $facdob = $_POST['facdob'];
-        $faclass = $_POST['class'];
         $facfname = $_POST['facfather'];
         $facmname = $_POST['facmother'];
         //accessing images
@@ -51,7 +50,7 @@
 
         
         $query="update adminregisterstudent set studentname = '$facname', studentbname = '$facbname', studentgender = '$facgender', 
-        studenthname = '$fachname', studentmobile = '$facmobno', studentdob = '$facdob', studentclass = '$faclass', 
+        studenthname = '$fachname', studentmobile = '$facmobno', studentdob = '$facdob', 
         studentfather = '$facfname', studentmother = '$facmname', role = '3', studentimage='$image' where studentid = '$uid'";
         $query1="update login_table set useremail = '$facemail', role = '3' where userid = '$uid'";
         /*if ($con->query($query1) === TRUE and $con->query($query) === TRUE)   */
@@ -117,7 +116,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="attendance.php">
+                    <a href="attendview.php">
                         <span class="icon icon-4"><i class="ri-calendar-2-line"></i></span>
                         <span class="sidebar--item">Attendance</span>
                     </a>
@@ -138,6 +137,15 @@
                 </li>
             </ul>            
         </div>
+
+        <div class="topbar" style="display:block;">
+            <span class="topbar--item">
+                <a href="managestudents.php" style="margin-right: 20px;">
+                    <i class="ri-arrow-left-circle-fill"></i>
+                    BACK
+                </a>
+            </span>
+        </div>1
 
         <div class="main--content">
             <div class="recent--patients">            
@@ -213,37 +221,17 @@
                                         <div class="error"></div>
                                     </td>
                                     <td>
-                                        <p>Class :</p>
-                                        <?php
-                                            $option = $rows['studentclass'];
-                                        ?>
-                                        <select type="text" name="class" id="class" octavalidate="R">
-                                            <?php
-                                                $q2 = "select * from catclass";
-                                                $r2 = mysqli_query($con, $q2);
-
-                                                if (mysqli_num_rows($r2) > 0) {
-                                                    // output data of each row
-                                                    while($row = mysqli_fetch_assoc($r2)) 
-                                                    {
-                                                    echo "<option>".$row["class"]."</option>";
-                                                    }
-                                                }                                        
-                                            ?>
-                                        </select>
-                                    </td>
-                                    <td>
                                         <p>Name of Father :</p>
                                         <input type="text" value="<?php echo $rows['studentfather'];?>" id="facfather" name="facfather" octavalidate="R"><br>
                                         <div class="error"></div>
                                     </td>
-                                </tr>
-                                <tr>
                                     <td>
                                         <p>Name of Mother :</p>
                                         <input type="text" value="<?php echo $rows['studentmother'];?>" id="facmother" name="facmother" octavalidate="R"><br>
                                         <div class="error"></div>
                                     </td>
+                                </tr>
+                                <tr>
                                     <td>
                                         <p>Upload Profile Photo :</p>
                                         <input type="file" placeholder="Upload your photo" id="facpic" name="facpic" accept="image/*" required><br>

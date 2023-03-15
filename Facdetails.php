@@ -6,6 +6,7 @@
     <head>
         <title>Faculty Details</title>
         <!-- Google Fonts -->
+        <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap" rel="stylesheet">
         <!-- Bootstrap CSS -->
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'>
@@ -132,7 +133,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="attendance.php">
+                        <a href="attendview.php">
                             <span class="icon icon-4"><i class="ri-calendar-2-line"></i></span>
                             <span class="sidebar--item">Attendance</span>
                         </a>
@@ -152,6 +153,15 @@
                         </a>
                     </li>
                 </ul>            
+            </div>
+
+            <div class="topbar" style="display:block;">
+                <span class="topbar--item">
+                    <a href="managefaculty.php" style="margin-right: 20px;">
+                        <i class="ri-arrow-left-circle-fill"></i>
+                        BACK
+                    </a>
+                </span>
             </div>
 
             <div class="main--content">

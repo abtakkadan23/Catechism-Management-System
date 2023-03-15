@@ -20,7 +20,7 @@ body {
     border-bottom: 4px solid #01135c;
 }
 
-.logo { 
+.logo {
     padding-left: 10px;
 }
 
@@ -269,6 +269,81 @@ a {
 }
 
 
+/* Topbar CSS starts here */
+
+.topbar 
+{
+    position: absolute;
+    top: 0px;
+    left: 256px;
+    height: 59px;
+    width: 1262px;
+    background-color: #ffffff;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-left: 4px solid #01135c;
+    border-bottom: 4px solid #01135c;
+    transition: .3s;
+}
+
+.topbar .active 
+{
+    width: 103px;
+    height: 60px;
+    overflow: hidden;
+}
+
+.topbar .topbar--item
+{
+    margin-top: 20px;
+}
+
+.topbar .active .topbar--item 
+{
+    margin-top: 10px;
+    height: 100px;
+    width: 200px;
+    display: none;
+}
+
+.topbar a
+{
+    padding: 12px 12px 12px 12px;
+    margin-bottom: 0px;
+    margin-right: 20px;
+    height: 54px;
+    width: 300px;
+    font-size: large;
+    align-items: center;
+}
+
+.topbar--items
+{
+    padding-top: 30px;
+}
+
+/* .topbar .active .topbar--items a{
+    display: flex;
+    height: 57px;
+    align-items: center;
+    margin-bottom: 0px;
+    font-size: 2.1rem;
+    color: #000;
+    padding: 10px;
+    border-radius: 0px;
+}*/
+
+.topbar a:hover
+{
+    background-color: #5073fb;
+    color: #fff;
+}
+
+/* Topbar CSS ends here */
+
+
 /* main--content */
 
 .main--content {
@@ -281,6 +356,123 @@ a {
     overflow-y: scroll;
     transition: .3s;
 }
+
+/* Form Style */
+
+.section--title 
+{
+    font-weight: 400;
+    margin-top: 20px;
+}
+
+.form
+{
+    width: 1200px;
+    margin-top: 10px;
+    height: auto;
+    background: #ffffff;
+    position: relative;
+    top: 60px;
+    left: 3px;
+    border-radius: 10px;
+    border: 1.5px solid rgb(0, 0, 0);
+    padding: 25px;
+}
+
+.form h2
+{
+    width: auto;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    text-align: center;
+    font-weight: bolder;
+    color: rgb(0, 0, 0);
+    font-size: 30px;
+    margin: 2px;
+    padding: 8px;
+}
+
+.form p
+{
+    color: rgb(0, 0, 0);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.form input
+{
+    width: 95% ;
+    height: 40px;
+    background: rgba(255, 255, 255, 0);
+    border-radius: 3px;
+    border: 2px solid rgba(0, 0, 0, 0.881);
+    color: rgb(0, 0, 0);
+    font-size: 15px;
+    letter-spacing: 1px;
+    font-family: sans-serif;
+}
+
+.form input:focus
+{
+    outline: none;
+}
+
+.form select
+{
+    width: 95% ;
+    height: 40px;
+    background: rgba(255, 255, 255, 0);
+    border-radius: 3px;
+    border: 2px solid rgba(0, 0, 0, 0.881);
+    color: rgb(0, 0, 0);
+    font-size: 15px;
+    letter-spacing: 1px;
+    font-family: sans-serif;
+}
+
+
+.form select:focus
+{
+    outline: none;
+}
+
+::placeholder
+{
+    columns: rgb(255, 255, 255);
+    font-family: Arial;
+    color: rgba(0, 0, 0, 0.622);
+}
+
+.loginbutton
+{
+    width: 350px;
+    height: 45px;
+    background: rgb(255, 255, 255);
+    margin-top: 40px;
+    margin-left: 400px;
+    font-size: 25px;
+    font-family: Impact;
+    border-radius: 15px;
+    cursor: #fff;
+    transition: 0.3s ease-in-out;
+}
+
+.loginbutton:hover
+{
+    background: rgba(255, 238, 0, 0.916);
+}
+
+.loginbutton a
+{
+    text-decoration: none;
+    color: black;
+}
+
+.loginbutton ::-ms-value:hover
+{
+    color: green;
+    font-size: 27px;
+}
+
 
 .main--content.active {
     width: calc(100% - 103px);
@@ -327,7 +519,7 @@ a {
 .card {
     padding: 20px;
     border-radius: 20px;
-    width: 215px;
+    min-width: 230px;
     height: auto;
     transition: .3s;
 }
@@ -473,7 +665,7 @@ a {
 /* recent--patients */
 
 .recent--patients {
-    margin-bottom: 20px;
+    margin-bottom: 0px;
     padding: 10px;
     background-color: #ffffff;
     border-radius: 5px;
@@ -511,7 +703,7 @@ a {
 }
 
 .table {
-    height: 200px;
+    height: 310px;
     overflow-y: scroll;
     /* overflow-x: scroll; */
     /* border-width: 3px;*/

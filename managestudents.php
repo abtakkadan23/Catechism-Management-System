@@ -62,7 +62,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="attendance.php">
+                    <a href="attendview.php">
                         <span class="icon icon-4"><i class="ri-calendar-2-line"></i></span>
                         <span class="sidebar--item">Attendance</span>
                     </a>
@@ -87,13 +87,13 @@
         <div class="topbar" style="display:block;">
             <span class="topbar--item">
                 <a href="managefaculty.php" style="margin-right: 20px;">
-                    <i class="ri-line-chart-line"></i>
+                    <i class="ri-window-fill"></i>
                     Faculties
                 </a>
             </span>
             <span class="topbar--item">
                 <a href="managestudents.php" id="active--link">
-                    <i class="ri-line-chart-line"></i>
+                    <i class="ri-window-fill"></i>
                     Students
                 </a>
             </span>

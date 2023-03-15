@@ -61,7 +61,7 @@
                         <span class="sidebar--item">Manage Class</span>
                     </a>
                 </li>
-                    <a href="attendance.php">
+                    <a href="attendview.php">
                         <span class="icon icon-4"><i class="ri-calendar-2-line"></i></span>
                         <span class="sidebar--item">Attendance</span>
                     </a>
@@ -174,59 +174,15 @@
                             </td>
 
                             <td>
-                                <p>Class :</p>
-                                <select type="text" name="class" id="class" octavalidate="R">
-                                    <?php
-                                        $q2 = "select * from catclass";
-                                        $r2 = mysqli_query($con, $q2);
-
-                                        if (mysqli_num_rows($r2) > 0) {
-                                            // output data of each row
-                                            while($row = mysqli_fetch_assoc($r2)) 
-                                            {
-                                              echo "<option>".$row["class"]."</option>";
-                                            }
-                                          }                                        
-                                    ?>
-                                </select>
-                                <!-- <select name="class" aria-placeholder="Class" id="class" required>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option> 
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option> 
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option> 
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option> 
-                                </select> -->
-                            </td>
-
-                            <td>
                                 <p>Name of Father :</p>
                                 <input type="text" placeholder="Father's Name" id="facfather" name="facfather" required><br>
                                 <div class="error"></div>
                             </td>
-                        </tr>
-                        
-                        <tr>
+                            
                             <td>
                                 <p>Name of Mother :</p>
                                 <input type="text" placeholder="Mother's Name" id="facmother" name="facmother" required><br>
                                 <div class="error"></div>
-                            </td>
-
-                            <td>
-                                <p>Enter a Password :</p>
-                                <input type="password" placeholder="Enter Password" id="facpassword" name="facpassword" required><br>
-                            </td>
-
-                            <td>
-                                <p>Enter the Password again :</p>
-                                <input type="password" placeholder="Re-enter Password" id="facrepassword" name="facrepassword" required><br>
                             </td>
                         </tr>
                     
