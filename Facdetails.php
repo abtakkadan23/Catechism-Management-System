@@ -104,7 +104,7 @@
                 </div>
             </div>
         </section>
-        <section class="main">
+        <section class="main"><div></div>
             <div class="sidebar">
                 <ul class="sidebar--items">
                     <li>
