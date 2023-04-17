@@ -33,7 +33,7 @@
                             Admin
                         </span>
                         <span><img class="picon profile" src="profile.jpg" alt="PIC"></span>
-                    </div>
+                    </div><div></div>
                 </a>
             </div>
         </div>
