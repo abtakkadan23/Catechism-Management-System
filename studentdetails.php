@@ -78,7 +78,7 @@
             $sql="SELECT * FROM `adminregisterstudent` WHERE studentid = '$id'";
             $result = $con->query($sql);
             $rows = $result->fetch_assoc();  
-            $con->close();
+            // $con->close();
         ?>
 
         <!-- Page Design -->
@@ -135,10 +135,16 @@
                             <span class="sidebar--item">Attendance</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="marks.php">
+                            <span class="icon icon-4"><i class="ri-numbers-fill"></i></span>
+                            <span class="sidebar--item">Marks</span>
+                        </a>
+                    </li>
                 </ul>
                 <ul class="sidebar--bottom-items">
                     <li>
-                        <a href="#">
+                        <a href="adminsettings.php">
                             <span class="icon icon-7"><i class="ri-settings-3-line"></i></span>
                             <span class="sidebar--item">Settings</span>
                         </a>
@@ -154,7 +160,7 @@
 
             <div class="topbar" style="display:block;">
                 <span class="topbar--item">
-                    <a href="managestudents.php" style="margin-right: 20px;">
+                    <a href="fmangstu.php" style="margin-right: 20px;">
                         <i class="ri-arrow-left-circle-fill"></i>
                         BACK
                     </a>
@@ -210,7 +216,12 @@
                                         <tr>
                                             <th width="30%">Email ID</th>
                                             <td width="2%">:</td>
-                                            <td><?php echo $rows['studentemail'];?></td>
+                                            <?php
+                                                $stid=$rows['studentid'];
+                                                $qy=mysqli_query($con,"SELECT * FROM login_table WHERE userid='$stid'");
+                                                $rqy=mysqli_fetch_assoc($qy);
+                                            ?>
+                                            <td><?php echo $rqy['useremail'];?></td>
                                         </tr>
                                         <tr>
                                             <th width="30%">Date of Birth</th>

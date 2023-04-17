@@ -1,6 +1,10 @@
 <?php
     include('session.php');
     include('config.php');
+
+    $q="select * from parish_info";
+    $r=mysqli_query($con, $q);
+    $parish = mysqli_fetch_assoc($r);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="managefacultystyle.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-    <title>Dashboard</title>
+    <title>Faculty Dashboard</title>
 </head>
 
 <body>
@@ -26,7 +30,21 @@
                 </div>
                 <a href="#">
                     <div class="picon chat">
-                        <span>Admin</span>
+                        <span>
+                            <?php
+                                // echo $_SESSION['email'];
+                                $mail = $_SESSION['email'];
+                                $sql = "SELECT * FROM `login_table` where useremail = '$mail'";
+                                $result = mysqli_query($con, $sql);
+                                $rows = $result->fetch_assoc();
+                                $id = $rows['userid'];
+                                $sqli = "select * from adminregisterfaculty where facultyid = '$id'";
+                                $rx = mysqli_query($con, $sqli);
+                                $rst = $rx->fetch_assoc();
+                                $cc = $rst['facultyclass']; 
+                                echo $rst['facultyname'];
+                            ?>
+                        </span>
                         <span><img class="picon profile" src="profile.jpg" alt="PIC"></span>
                     </div>
                 </a>
@@ -37,46 +55,59 @@
         <div class="sidebar">
             <ul class="sidebar--items">
                 <li>
-                    <a href="admindashboard.php">
+                    <a href="facultydashboard.php">
                         <span class="icon icon-1"><i class="ri-admin-line"></i></span>
-                        <span class="sidebar--item"> Admin Dashboard</span>
+                        <span class="sidebar--item"> Faculty Dashboard</span>
                     </a>
                 </li>
                 
-                <li>
+                <!-- <li>
                     <a href="addnewfaculty.php">
                         <span class="icon icon-5"><i class="ri-user-add-line"></i></span>
-                        <span class="sidebar--item">Registration</span>
+                        <span class="sidebar--item">Add Faculty</span>
                     </a>
                 </li>
                 <li>
-                    <a href="managefaculty.php" id="active--link">
+                <li>
+                    <a href="#">
+                        <span class="icon icon-5"><i class="ri-user-add-line"></i></span>
+                        <span class="sidebar--item">Add Student</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="managefaculty.php">
                         <span class="icon icon-2"><i class="ri-user-line"></i></span>
-                        <span class="sidebar--item">Manage Members</span>
+                        <span class="sidebar--item">Manage Faculties</span>
                     </a>
                 </li>
-                <li>
-                    <a href="manageclass.php ">
+                <li> -->
+                    <a href="fmangstu.php" id="active--link">
+                        <span class="icon icon-3"><i class="ri-user-line"></i></span>
+                        <span class="sidebar--item" style="white-space: nowrap;">Manage Students</span>
+                    </a>
+                </li>
+                <!-- <li>
+                    <a href="#">
                         <span class="icon icon-6"><i class="ri-line-chart-line"></i></span>
                         <span class="sidebar--item">Manage Class</span>
                     </a>
-                </li>
+                </li> -->
                 <li>
-                    <a href="attendview.php">
+                    <a href="takeattendance.php">
                         <span class="icon icon-4"><i class="ri-calendar-2-line"></i></span>
                         <span class="sidebar--item">Attendance</span>
                     </a>
                 </li>
                 <li>
-                    <a href="marks.php">
-                        <span class="icon icon-4"><i class="ri-numbers-fill"></i></span>
+                    <a href="facmarks.php">
+                        <span class="icon icon-4"><i class="ri-calendar-2-line"></i></span>
                         <span class="sidebar--item">Marks</span>
                     </a>
                 </li>
             </ul>
             <ul class="sidebar--bottom-items">
                 <li>
-                    <a href="adminsettings.php">
+                    <a href="fac_changepass.php">
                         <span class="icon icon-7"><i class="ri-settings-3-line"></i></span>
                         <span class="sidebar--item">Settings</span>
                     </a>
@@ -87,24 +118,9 @@
                         <span class="sidebar--item">Logout</span>
                     </a>
                 </li>
-            </ul>            
-        </div>  
-        
-        <div class="topbar" style="display:block;">
-            <span class="topbar--item">
-                <a href="managefaculty.php" style="margin-right: 20px;">
-                    <i class="ri-window-fill"></i>
-                    Faculties
-                </a>
-            </span>
-            <span class="topbar--item">
-                <a href="managestudents.php" id="active--link">
-                    <i class="ri-window-fill"></i>
-                    Students
-                </a>
-            </span>
+            </ul>
         </div>
-
+        
         <div class="main--content">
             <div class="recent--patients">
                 <div class="title">
@@ -128,7 +144,7 @@
                     }
                     
                     // SQL query to select data from database
-                    $sql="SELECT * FROM `adminregisterstudent` WHERE status=1";
+                    $sql="SELECT * FROM `adminregisterstudent` WHERE studentclass='$cc'";
                     // $sql2="SELECT * FROM `login_table` WHERE status=1";         //monday
                     // $sql3="SELECT * FROM `login_table` WHERE status=0";
                     $result = $mysqli->query($sql);
@@ -160,8 +176,8 @@
                                         <td><?php echo $rows['studentid'];?></td>
                                         <td><?php echo $rows['studentname'];?></td>
                                         <td><?php echo $rows['studentclass'];?></td>
-                                        <td><center><a href="updatestudent.php?id=<?php echo $rows['studentid'];?>"><button style="color: White; background-color:orange; width:80px; height:30px;"><i class="ri-edit-line"></i>Edit</button></a></center></td>
-                                        <td><center><a href="studentdetails.php?id=<?php echo $rows['studentid'];?>"><button style="color: White; background-color:orange; width:120px; height:30px;"><i class="ri-edit-line"></i>View Profile</button></a></center></td>
+                                        <td><center><a href="facupdatestudent.php?id=<?php echo $rows['studentid'];?>"><button style="color: White; background-color:orange; width:80px; height:30px;"><i class="ri-edit-line"></i>Edit</button></a></center></td>
+                                        <td><center><a href="facstudentdetails.php?id=<?php echo $rows['studentid'];?>"><button style="color: White; background-color:orange; width:120px; height:30px;"><i class="ri-edit-line"></i>View Profile</button></a></center></td>
                                     </tr>
                             <?php
                                 }
@@ -171,6 +187,7 @@
                 </div>
             </div>
         </div>
+        
     </section>
     <script src="admin.js"></script>
 </body>

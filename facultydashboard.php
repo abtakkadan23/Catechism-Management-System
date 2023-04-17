@@ -1,6 +1,10 @@
 <?php
     include('session.php');
     include('config.php');
+
+    $q="select * from parish_info";
+    $r=mysqli_query($con, $q);
+    $parish = mysqli_fetch_assoc($r);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -76,21 +80,27 @@
                     </a>
                 </li>
                 <li> -->
-                    <a href="#">
+                    <a href="fmangstu.php">
                         <span class="icon icon-3"><i class="ri-user-line"></i></span>
                         <span class="sidebar--item" style="white-space: nowrap;">Manage Students</span>
                     </a>
                 </li>
-                <li>
+                <!-- <li>
                     <a href="#">
                         <span class="icon icon-6"><i class="ri-line-chart-line"></i></span>
                         <span class="sidebar--item">Manage Class</span>
                     </a>
-                </li>
+                </li> -->
                 <li>
                     <a href="takeattendance.php">
                         <span class="icon icon-4"><i class="ri-calendar-2-line"></i></span>
                         <span class="sidebar--item">Attendance</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="facmarks.php">
+                        <span class="icon icon-4"><i class="ri-calendar-2-line"></i></span>
+                        <span class="sidebar--item">Marks</span>
                     </a>
                 </li>
             </ul>
@@ -112,6 +122,10 @@
         
         <div class="main--content">
             <div class="overview">
+                <center>
+                    <h2><?php echo $parish['p_name'];?> Sunday School</h2>
+                    <h3><?php echo $parish['p_place'];?></h3>
+                </center>
                 <div class="title">
                     <h2 class="section--title"> <b>Overview </b></h2>
                     <!--
@@ -141,6 +155,7 @@
                                     $xx = $res->fetch_assoc();
                                     $c = $xx['class_id'];
                                     $d = $xx['div_id'];
+                                    $asid = $xx['assoc_id'];
                                     $c1 = "select * from catclass where classid = '$c'";
                                     $re = $con->query($c1);
                                     $fg = $re->fetch_assoc();
@@ -153,6 +168,22 @@
                                     echo $division;
                                     // echo $d1['division'];
                                 ?>
+                                </h1>
+                            </div>
+                            <i class="ri-user-line card--icon--lg"></i>
+                        </div>
+                    </div>
+                    <div class="card card-2">
+                        <div class="card--data">
+                            <div class="card--content">
+                                <h5 class="card--title">Class Strength</h5>
+                                <h1>
+                                    <?php 
+                                        $cal1="SELECT COUNT(studentid) FROM adminregisterstudent WHERE studentclass='$asid' AND status=1";
+                                        $cal2 = $con->query($cal1);
+                                        $pcount = $cal2->fetch_row()[0];
+                                        echo $pcount;
+                                    ?>
                                 </h1>
                             </div>
                             <i class="ri-user-line card--icon--lg"></i>
@@ -172,8 +203,7 @@
                             <tr>
                                 <th>NAME</th>
                                 <th>CONTACT NUMBER</th>
-                                <th>EMAIL</th>
-                                <th>CHANGE STATUS</th>
+                                <th>STUDENT ID</th>
                             </tr>
                         </thead>
                         <tbody> 
@@ -196,7 +226,7 @@
                                 
                                 // SQL query to select data from database
 
-                                $sql1="SELECT * FROM `adminregisterstudent` order by studentname";
+                                $sql1="SELECT * FROM `adminregisterstudent` where studentclass = '$asid' and status = 1 order by studentname";
                                 $res=mysqli_query($con,$sql);
                                 $count=mysqli_num_rows($res);
                                 if($count>0)
@@ -214,36 +244,9 @@
                                     <tr>
                                         <!-- FETCHING DATA FROM EACH
                                             ROW OF EVERY COLUMN -->
-                                            <td><?php echo $rows['studentname'];?></td>
-                                            <td><?php echo $rows['studentmobile'];?></td>
-                                        <?php
-                                            $lid = $rows['studentid'];
-                                            $emailval='';
-                                            $query1="SELECT * FROM login_table where userid = '$lid' ";
-                                            $data1 = mysqli_query($con,$query1);
-                                            while($res1=mysqli_fetch_assoc($data1))
-                                            {
-                                                    $emailval = $res1['useremail'];
-                                            }
-                                        ?>
-                                        <td><?php echo $emailval;?></td>
-                                        <td>
-                                            <?php
-                                                if ($rows['status']==1)
-                                                {
-                                            ?>
-                                                    <a href="?type=status&operation=deactive&id=<?php echo $rows['studregid'];?>"><button style="color: White; background-color:red; width:80px; height:30px;">Deactivate</button></a>
-                                            <?php
-                                                } 
-                                                else
-                                                { 
-                                            ?>
-                                                    <a href="?type=status&operation=active&id=<?php echo $rows['studregid'];?>"><button style="color: White; background-color:green; width:80px; height:30px;">Activate</button></a>
-                                                
-                                            <?php
-                                                }
-                                            ?> 
-                                        </td>
+                                        <td><?php echo $rows['studentname'];?></td>
+                                        <td><?php echo $rows['studentmobile'];?></td>
+                                        <td><?php echo $rows['studentid'];?></td>
                                     </tr>
                                     <?php
                                 }
